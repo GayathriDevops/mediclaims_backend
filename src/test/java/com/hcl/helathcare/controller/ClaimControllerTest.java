@@ -17,12 +17,16 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hcl.helathcare.dto.ClaimReqDto;
 import com.hcl.helathcare.dto.ClaimResponseDTO;
+import com.hcl.helathcare.dto.ResponseDto;
 import com.hcl.helathcare.dto.UpdateRequestDTO;
 import com.hcl.helathcare.dto.UpdateResponseDTO;
 import com.hcl.helathcare.dto.ViewClaimsDTO;
 import com.hcl.helathcare.exception.ClaimNotPresentException;
+import com.hcl.helathcare.exception.InvalidClaimAmountException;
 import com.hcl.helathcare.exception.PolicyNotExistsException;
+import com.hcl.helathcare.exception.UserNotExistsException;
 import com.hcl.helathcare.service.ClaimService;
 import com.hcl.helathcare.service.ClaimServiceImpl;
 
@@ -38,7 +42,8 @@ public class ClaimControllerTest {
 	@InjectMocks
 	private ClaimController claimController;
 
-
+	private ClaimReqDto claimReq;
+	private ResponseDto response;
 	private ClaimResponseDTO claimResponseDTO;
 	private ViewClaimsDTO viewClaimsDTO;
 	private UpdateRequestDTO updateRequestDTO;
@@ -48,6 +53,8 @@ public class ClaimControllerTest {
 	public void setUp() {
 
 		MockitoAnnotations.initMocks(this);
+		claimReq = ClaimReqDto.builder().userId(1L).policyId(1L).claimAmount(5000.0).build();
+		response = ResponseDto.builder().message("claim Success").statusCode(201).build();
 
 		claimResponseDTO = new ClaimResponseDTO();
 		claimResponseDTO.setUserId(1L);
@@ -73,6 +80,13 @@ public class ClaimControllerTest {
 
 	}
 
+	@Test
+	public void createNewClaimTest()
+			throws UserNotExistsException, InvalidClaimAmountException, PolicyNotExistsException {
+		Mockito.when(claimService.createNewClaim(claimReq)).thenReturn(response);
+		ResponseEntity<ResponseDto> actRes = claimController.createNewClaim(claimReq);
+		assertEquals(201, actRes.getStatusCode().value());
+	}
 
 	/**
 	 * @throws ClaimNotPresentException

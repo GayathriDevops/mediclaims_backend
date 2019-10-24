@@ -22,12 +22,11 @@ public interface ClaimService {
 	 * @throws ClaimNotPresentException
 	 * @throws PolicyNotExistsException
 	 */
-	
-	List<ClaimResponseDTO> viewClaims(String roleName) throws ClaimNotPresentException;
-
 	Claim updateClaims(UpdateRequestDTO updateRequest) throws ClaimNotPresentException, PolicyNotExistsException;
 	
 	ResponseDto createNewClaim(ClaimReqDto request)  throws  UserNotExistsException, InvalidClaimAmountException, PolicyNotExistsException;
+
+	List<ClaimResponseDTO> viewClaims(String roleName) throws ClaimNotPresentException;
 	
 	public ClaimResponse getClaimsByUser(Long userId);
 
