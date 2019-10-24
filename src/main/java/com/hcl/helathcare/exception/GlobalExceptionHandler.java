@@ -39,13 +39,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * 
-<<<<<<< HEAD
 	 * @param InvalidCredentialsException- unchecked exception
 	 * @param request-                     API request
-=======
-	 * @param InvalidCredentialsException- checked and unchecked exception
-	 * @param request- API request
->>>>>>> 259837899ac0190e8421ae4add693ec13275c33d
 	 * @return ResponseDto- message and status code
 	 */
 	@ExceptionHandler(InvalidCredentialsException.class)
