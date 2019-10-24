@@ -98,7 +98,7 @@ public class ClaimServiceImpl implements ClaimService {
 
 		return claimResult;
 	}
-	
+
 	/**
 	 * @param updateRequest
 	 * @return UpdateRequestDTO
@@ -132,7 +132,7 @@ public class ClaimServiceImpl implements ClaimService {
 		}
 		return claimResult;
 	}
-	
+
 	/**
 	 * Method will validate user, policy, claim amount it is valid it will create
 	 * new claim else throw exception
@@ -246,6 +246,3 @@ public class ClaimServiceImpl implements ClaimService {
 		return response;
 	}
 }
-
-
-

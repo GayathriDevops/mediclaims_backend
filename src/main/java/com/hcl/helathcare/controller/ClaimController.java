@@ -42,7 +42,7 @@ public class ClaimController {
 
 	@Autowired
 	ClaimService claimService;
-	
+
 	/**
 	 * @param ClaimReqDto -NotNull, multipartfile
 	 * @return-ResponseDto-message,statusCode
@@ -75,6 +75,7 @@ public class ClaimController {
 
 		return new ResponseEntity<>(claimsList, HttpStatus.OK);
 	}
+
 	
 	/**
 	 * method update claims returns list of all claims
@@ -99,6 +100,7 @@ public class ClaimController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
+	
 	
 	/** 
 	 * @param UserId
@@ -126,6 +128,4 @@ public class ClaimController {
 
 	}
 
-
-	
 }
