@@ -14,12 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcl.helathcare.dto.ClaimReqDto;
+import com.hcl.helathcare.dto.ClaimResponse;
 import com.hcl.helathcare.dto.ClaimResponseDTO;
+import com.hcl.helathcare.dto.PolicyResponse;
+import com.hcl.helathcare.dto.ResponseDto;
 import com.hcl.helathcare.dto.UpdateRequestDTO;
 import com.hcl.helathcare.dto.UpdateResponseDTO;
 import com.hcl.helathcare.dto.ViewClaimsDTO;
 import com.hcl.helathcare.exception.ClaimNotPresentException;
+import com.hcl.helathcare.exception.InvalidClaimAmountException;
 import com.hcl.helathcare.exception.PolicyNotExistsException;
+import com.hcl.helathcare.exception.UserNotExistsException;
 import com.hcl.helathcare.service.ClaimService;
 import com.hcl.helathcare.util.Constants;
 
@@ -36,6 +42,19 @@ public class ClaimController {
 
 	@Autowired
 	ClaimService claimService;
+	
+	/**
+	 * @param ClaimReqDto -NotNull, multipartfile
+	 * @return-ResponseDto-message,statusCode
+	 * @exception-UserNotExistsException,InvalidClaimAmountException, PolicyNotExistsException
+	 */
+	@PostMapping("/claims")
+	public ResponseEntity<ResponseDto> createNewClaim(@RequestBody ClaimReqDto request)
+			throws UserNotExistsException, InvalidClaimAmountException, PolicyNotExistsException {
+		logger.info("::Enter into------------: createNewClaim()");
+		return new ResponseEntity<>(claimService.createNewClaim(request), HttpStatus.CREATED);
+
+	}
 
 	
 	/**
@@ -78,6 +97,32 @@ public class ClaimController {
 		response.setStatusCode(Constants.OK);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
+
+	}
+	
+	/** 
+	 * @param UserId
+	 * @return ClaimResponse
+	 * @author vishnu
+	 * 
+	 */
+	@GetMapping("/members/{userId}/claims")
+	public ResponseEntity<ClaimResponse> getClaimsByUser(@PathVariable Long userId) {
+		logger.info("Enter into Claim Controller::---------- getClaimsByUser()");
+		return new ResponseEntity<>(claimService.getClaimsByUser(userId), HttpStatus.OK);
+
+	}
+	
+	/** 
+	 * @param UserId
+	 * @return PolicyResponse
+	 * @author shankar
+	 * 
+	 */
+	@GetMapping("/members/{userId}/policy")
+	public ResponseEntity<PolicyResponse> getPolicyByUser(@PathVariable Long userId) {
+		logger.info("Enter into policy Controller::---------- getPolicyByUser()");
+		return new ResponseEntity<>(claimService.getPolicesByUserId(userId), HttpStatus.OK);
 
 	}
 
